@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bucko Food App</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+*{font-family:'Poppins',sans-serif}body{background:#FCF8F1;margin:0}.screen{display:none}.active{display:block}
+.btn-orange{background:#FF8C00;color:#fff;border-radius:30px;padding:12px;font-weight:600;border:none;transition:.3s}
+.btn-orange:hover{background:#e67e00}.logo-text{font-size:clamp(2.5rem,10vw,4rem);font-weight:800;color:#FF8C00;letter-spacing:-2px}
+.price-tag{color:#28a745;font-weight:bold}.food-card{background:#fff;border-radius:20px;border:none;margin-bottom:15px;box-shadow:0 4px 12px rgba(0,0,0,.08);overflow:hidden;cursor:pointer}
+.food-img{width:100%;height:160px;object-fit:cover}.error-msg{color:#dc3545;font-size:.8rem;display:none;margin-bottom:8px}
+.success-circle{width:100px;height:100px;background:#28a745;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:50px;margin:0 auto 20px}
+.map-container{border-radius:20px;overflow:hidden;width:100%;height:300px;margin-bottom:15px;border:1px solid #ddd}
+.form-control:focus,.form-select:focus{border-color:#FF8C00;box-shadow:0 0 0 .2rem rgba(255,140,0,.25)}
+.form-check-input:checked{background-color:#FF8C00;border-color:#FF8C00}
+.carousel-item img{width:100%;height:260px;object-fit:cover;display:block}
+.navbar-brand{font-weight:800;color:#FF8C00!important;font-size:1.5rem}
+@media(max-width:576px){.carousel-item img{height:180px}.map-container{height:200px}}
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <span class="navbar-brand">🍔 BUCKO</span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#" onclick="nav(1)">Početak</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="nav(3)">Lokacija</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="nav(4)">Meni</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="nav(8)">Rezervacija</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="s1" class="screen active">
+  <div class="container py-5 text-center">
+    <h1 class="logo-text">BUCKO</h1>
+    <p class="text-muted fs-5">Najjača hrana u kraju</p>
+    <div class="row justify-content-center my-4"><div class="col-12 col-sm-8 col-md-6 col-lg-4">
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600" class="img-fluid rounded-circle" style="width:250px;height:250px;object-fit:cover" alt="Bucko Burger">
+    </div></div>
+    <div class="alert alert-warning d-inline-block rounded-pill px-4" role="alert">🕐 Radno vreme: 10:00 - 23:00</div>
+    <div class="mt-4"><button class="btn btn-orange px-5 py-3 fs-5" onclick="nav(2)">GET STARTED</button></div>
+  </div>
+</section>
+
+<section id="s2" class="screen">
+  <div class="container py-5"><div class="row justify-content-center"><div class="col-12 col-sm-8 col-md-6 col-lg-4">
+    <div class="card border-0 shadow-sm rounded-4 p-4">
+      <h3 class="fw-bold mb-4 text-center">Prijavi se</h3>
+      <input type="email" id="email" class="form-control rounded-pill p-3 mb-1" placeholder="Email (npr. bucko@gmail.com)">
+      <div id="e-err" class="error-msg">Format: ime@gmail.com</div>
+      <input type="password" id="pass" class="form-control rounded-pill p-3 mb-1" placeholder="Lozinka (8 karaktera)">
+      <div id="p-err" class="error-msg">Mora imati 8 karaktera</div>
+      <button class="btn btn-orange w-100 mt-3" onclick="validate()">LOGIN</button>
+    </div>
+  </div></div></div>
+</section>
+
+<section id="s3" class="screen">
+  <div class="container py-4">
+    <h4 class="fw-bold mb-3 text-center">Gde smo?</h4>
+    <div class="map-container"><iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m12!1m3!1d2831.2!2d20.48!3d44.79!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDTCsDQ3JzI0LjAiTiAyMMKwMjgnNDguMCJF!5e0!3m2!1ssr!2srs"></iframe></div>
+    <div class="card border-0 rounded-4 shadow-sm mb-4 text-center p-3"><h6 class="fw-bold m-0"><span class="badge bg-warning text-dark me-2">📍</span>Gospodara Vučića 63, Beograd</h6></div>
+    <h5 class="fw-bold mb-3 text-center">Naša atmosfera</h5>
+    <div id="atmosferaCarousel" class="carousel slide mb-4 rounded-4 overflow-hidden shadow-sm" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#atmosferaCarousel" data-bs-slide-to="0" class="active" style="background:#FF8C00"></button>
+        <button type="button" data-bs-target="#atmosferaCarousel" data-bs-slide-to="1" style="background:#FF8C00"></button>
+        <button type="button" data-bs-target="#atmosferaCarousel" data-bs-slide-to="2" style="background:#FF8C00"></button>
+        <button type="button" data-bs-target="#atmosferaCarousel" data-bs-slide-to="3" style="background:#FF8C00"></button>
+        <button type="button" data-bs-target="#atmosferaCarousel" data-bs-slide-to="4" style="background:#FF8C00"></button>
+        <button type="button" data-bs-target="#atmosferaCarousel" data-bs-slide-to="5" style="background:#FF8C00"></button>
+        <button type="button" data-bs-target="#atmosferaCarousel" data-bs-slide-to="6" style="background:#FF8C00"></button>
+        <button type="button" data-bs-target="#atmosferaCarousel" data-bs-slide-to="7" style="background:#FF8C00"></button>
+        <button type="button" data-bs-target="#atmosferaCarousel" data-bs-slide-to="8" style="background:#FF8C00"></button>
+        <button type="button" data-bs-target="#atmosferaCarousel" data-bs-slide-to="9" style="background:#FF8C00"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active"><picture><source media="(max-width:576px)" srcset="https://images.unsplash.com/photo-1551782450-17144efb9c50?w=400&h=180&fit=crop&q=60"><img src="https://images.unsplash.com/photo-1551782450-17144efb9c50?w=900&h=260&fit=crop&q=80" alt="1"></picture></div>
+        <div class="carousel-item"><picture><source media="(max-width:576px)" srcset="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=180&fit=crop&q=60"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&h=260&fit=crop&q=80" alt="2"></picture></div>
+        <div class="carousel-item"><picture><source media="(max-width:576px)" srcset="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&h=180&fit=crop&q=60"><img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=900&h=260&fit=crop&q=80" alt="3"></picture></div>
+        <div class="carousel-item"><picture><source media="(max-width:576px)" srcset="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=180&fit=crop&q=60"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=900&h=260&fit=crop&q=80" alt="4"></picture></div>
+        <div class="carousel-item"><picture><source media="(max-width:576px)" srcset="https://images.unsplash.com/photo-1562967914-608f82629710?w=400&h=180&fit=crop&q=60"><img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=900&h=260&fit=crop&q=80" alt="5"></picture></div>
+        <div class="carousel-item"><picture><source media="(max-width:576px)" srcset="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&h=180&fit=crop&q=60"><img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=900&h=260&fit=crop&q=80" alt="6"></picture></div>
+        <div class="carousel-item"><picture><source media="(max-width:576px)" srcset="https://images.unsplash.com/photo-1484723091739-30990ff42af0?w=400&h=180&fit=crop&q=60"><img src="https://images.unsplash.com/photo-1484723091739-30990ff42af0?w=900&h=260&fit=crop&q=80" alt="7"></picture></div>
+        <div class="carousel-item"><picture><source media="(max-width:576px)" srcset="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=400&h=180&fit=crop&q=60"><img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=900&h=260&fit=crop&q=80" alt="8"></picture></div>
+        <div class="carousel-item"><picture><source media="(max-width:576px)" srcset="https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=400&h=180&fit=crop&q=60"><img src="https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=900&h=260&fit=crop&q=80" alt="9"></picture></div>
+        <div class="carousel-item"><picture><source media="(max-width:576px)" srcset="https://images.unsplash.com/photo-1523473827533-2a64d0d36748?w=400&h=180&fit=crop&q=60"><img src="https://images.unsplash.com/photo-1523473827533-2a64d0d36748?w=900&h=260&fit=crop&q=80" alt="10"></picture></div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#atmosferaCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+      <button class="carousel-control-next" type="button" data-bs-target="#atmosferaCarousel" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+    </div>
+    <button class="btn btn-orange w-100" onclick="nav(4)">IDI NA MENI →</button>
+  </div>
+</section>
+
+<section id="s4" class="screen">
+  <div class="container py-4">
+    <h4 class="fw-bold mb-4">Naš Meni</h4>
+    <div class="row g-3">
+      <div class="col-12 col-md-6"><div class="card food-card" onclick="nav(5)">
+        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600" class="food-img" alt="Bucko Burger">
+        <div class="card-body d-flex justify-content-between align-items-center"><div><h6 class="m-0 fw-bold">Bucko Burger</h6><span class="price-tag">560 RSD</span></div><span class="badge bg-warning text-dark">KUPI</span></div>
+      </div></div>
+      <div class="col-12 col-md-6"><div class="card food-card" onclick="nav(5)">
+        <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=600" class="food-img" alt="Krilca">
+        <div class="card-body d-flex justify-content-between align-items-center"><div><h6 class="m-0 fw-bold">Hrskava Krilca</h6><span class="price-tag">450 RSD</span></div><span class="badge bg-warning text-dark">KUPI</span></div>
+      </div></div>
+    </div>
+    <button class="btn btn-outline-secondary w-100 rounded-pill mt-3" onclick="nav(8)">📋 Rezerviši sto</button>
+  </div>
+</section>
+
+<section id="s5" class="screen">
+  <div class="container py-5 text-center"><div class="row justify-content-center"><div class="col-12 col-sm-8 col-md-5">
+    <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400" class="img-fluid rounded-circle mb-4" style="width:150px;height:150px;object-fit:cover" alt="Piće">
+    <h3 class="fw-bold mb-4">Želiš li i piće?</h3>
+    <button class="btn btn-orange w-100 py-3 mb-2" onclick="nav(6)">DA, DODAJ PIĆE</button>
+    <button class="btn btn-light w-100 py-3 border" onclick="completeOrder('Obrok bez pića')">NE, SAMO HRANA</button>
+  </div></div></div>
+</section>
+
+<section id="s6" class="screen">
+  <div class="container py-4">
+    <h4 class="fw-bold mb-4 text-center">Izaberi osveženje</h4>
+    <div class="row g-3">
+      <div class="col-12 col-md-6"><div class="card food-card" onclick="completeOrder('Obrok + Coca Cola')">
+        <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600" class="food-img" alt="Cola">
+        <div class="card-body text-center"><h6 class="fw-bold m-0">Hladna Coca-Cola</h6></div>
+      </div></div>
+      <div class="col-12 col-md-6"><div class="card food-card" onclick="completeOrder('Obrok + Limunada')">
+        <img src="https://images.unsplash.com/photo-1523473827533-2a64d0d36748?w=600" class="food-img" alt="Limunada">
+        <div class="card-body text-center"><h6 class="fw-bold m-0">Domaća Limunada</h6></div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section id="s7" class="screen">
+  <div class="container py-5 text-center"><div class="row justify-content-center"><div class="col-12 col-sm-8 col-md-5">
+    <div class="success-circle">✓</div>
+    <h2 class="fw-bold">Hvala ti!</h2>
+    <p id="final-msg" class="text-muted mb-5">Tvoja porudžbina je uspešno primljena.</p>
+    <button class="btn btn-orange w-100" onclick="nav(1)">VRATI SE NA POČETAK</button>
+  </div></div></div>
+</section>
+
+<section id="s8" class="screen">
+  <div class="container py-4"><div class="row justify-content-center"><div class="col-12 col-md-7 col-lg-5">
+    <div class="d-flex align-items-center mb-3">
+      <button class="btn btn-sm btn-light rounded-pill me-2" onclick="nav(4)">← Nazad</button>
+      <h5 class="fw-bold m-0">Rezervacija stola</h5>
+    </div>
+    <div class="card border-0 shadow-sm rounded-4 p-4">
+      <div class="mb-3"><label class="form-label fw-semibold">Ime i prezime</label><input type="text" class="form-control" placeholder="npr. Marko Marković"></div>
+      <div class="mb-3"><label class="form-label fw-semibold">Broj osoba</label><input type="number" class="form-control" min="1" max="20" placeholder="npr. 4"></div>
+      <div class="row g-2 mb-3">
+        <div class="col-7"><label class="form-label fw-semibold">Datum</label><input type="date" class="form-control"></div>
+        <div class="col-5"><label class="form-label fw-semibold">Vreme</label><input type="time" class="form-control"></div>
+      </div>
+      <div class="mb-3"><label class="form-label fw-semibold">Vrsta stola</label>
+        <select class="form-select"><option value="">-- Izaberi --</option><option>Unutra (zatvoreni prostor)</option><option>Napolju (terasa)</option><option>VIP kabina</option></select>
+      </div>
+      <div class="mb-3"><label class="form-label fw-semibold">Napomena</label><textarea class="form-control" rows="3" placeholder="Posebni zahtevi, alergije..."></textarea></div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Budžet po osobi: <span id="budzetVal" class="text-warning">1000</span> RSD</label>
+        <input type="range" class="form-range" min="500" max="5000" step="100" value="1000" oninput="document.getElementById('budzetVal').innerText=this.value">
+      </div>
+      <div class="mb-3"><label class="form-label fw-semibold">Opcije</label>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="c1"><label class="form-check-label" for="c1">Dečja stolica</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="c2"><label class="form-check-label" for="c2">Proslava (torta + svećice)</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="c3"><label class="form-check-label" for="c3">Parking mesto</label></div>
+      </div>
+      <div class="mb-4"><label class="form-label fw-semibold">Kako ste čuli za nas?</label>
+        <div class="form-check"><input class="form-check-input" type="radio" name="izvor" id="r1"><label class="form-check-label" for="r1">Prijatelj / porodica</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="izvor" id="r2"><label class="form-check-label" for="r2">Instagram / TikTok</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="izvor" id="r3"><label class="form-check-label" for="r3">Google</label></div>
+      </div>
+      <button class="btn btn-orange w-100" onclick="submitRezervacija()">POTVRDI REZERVACIJU</button>
+    </div>
+  </div></div></div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function nav(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s'+id).classList.add('active');window.scrollTo(0,0)}
+function validate(){const e=document.getElementById('email'),p=document.getElementById('pass');let ok=true;if(!e.value.includes('@gmail.com')){document.getElementById('e-err').style.display='block';e.style.borderColor='red';ok=false}else{document.getElementById('e-err').style.display='none';e.style.borderColor=''}if(p.value.length!==8){document.getElementById('p-err').style.display='block';p.style.borderColor='red';ok=false}else{document.getElementById('p-err').style.display='none';p.style.borderColor=''}if(ok)nav(3)}
+function completeOrder(msg){document.getElementById('final-msg').innerText="Vaša narudžbina: "+msg+". Stižemo za 20 min!";nav(7)}
+function submitRezervacija(){document.getElementById('final-msg').innerText="Vaša rezervacija je primljena. Vidimo se uskoro u Bucku! 🍔";nav(7)}
+</script>
+</body>
+</html>
